@@ -1,3 +1,5 @@
+from collections import deque
+
 
 class Node:
     def __init__(self,tag=None):
@@ -82,4 +84,19 @@ graph.add_edge("1", "3")
 graph.add_edge("4", "1")
 graph.add_edge("2", "4")
 
+def BFS(graph, start):
+    for node in graph.V.values():
+        node.color = 0
 
+    queue = deque()
+    start.color = 1  
+    queue.append(start)
+
+    while queue:
+        current_node = queue.popleft()  
+       
+        for neighbor in current_node.adj:
+            if neighbor.color == 0:  
+                neighbor.color = 1 
+                queue.append(neighbor)  
+        current_node.color = 2 
