@@ -70,6 +70,27 @@ class Graph:
         k1 = frm.tag+10000*to.tag 
         self.E[k1] = edge 
 
+def BFS(graph, start):
+    for node in graph.V.values():
+        node.color = 0
+        print(f"Vertice {node.tag} (cor: branco)")
+
+    queue = deque()
+    start.color = 1  
+    queue.append(start)
+
+    while queue:
+        current_node = queue.popleft()  
+        print(f"Visitando vértice {current_node.tag} (cor: cinza)")
+
+        for neighbor in current_node.adj:
+            if neighbor.color == 0:  
+                neighbor.color = 1 
+                queue.append(neighbor)  
+                print(f"Descoberto vértice {neighbor.tag} (cor: cinza)")
+        current_node.color = 2 
+        print(f"Vértice {current_node.tag} totalmente explorado (cor: preta)")
+
 graph = Graph()
 
 graph.add_node("0")
@@ -84,19 +105,5 @@ graph.add_edge("1", "3")
 graph.add_edge("4", "1")
 graph.add_edge("2", "4")
 
-def BFS(graph, start):
-    for node in graph.V.values():
-        node.color = 0
-
-    queue = deque()
-    start.color = 1  
-    queue.append(start)
-
-    while queue:
-        current_node = queue.popleft()  
-       
-        for neighbor in current_node.adj:
-            if neighbor.color == 0:  
-                neighbor.color = 1 
-                queue.append(neighbor)  
-        current_node.color = 2 
+start_node = graph.V["0"]
+BFS(graph, start_node)
